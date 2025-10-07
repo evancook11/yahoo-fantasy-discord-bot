@@ -28,10 +28,6 @@ async def on_ready():
         print(e)
 
 
-@bot.tree.command(name="hello")
-async def hello(interaction: discord.Interaction):
-    await interaction.response.send_message(f"Hey {interaction.user.mention}! This is a slash command!")
-
 
 @bot.tree.command(name="standings")
 async def standings(interaction: discord.Interaction):
