@@ -1,8 +1,10 @@
+from pathlib import Path
 import discord
-from discord import app_commands
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
+from yahoo_api import YahooApi
+import formatting
 
 load_dotenv()
 discord_token = os.getenv('DISCORD_TOKEN')
@@ -18,6 +20,8 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+yahoo_api = YahooApi("127288", "nhl", Path(__file__).parent)
+
 @bot.event
 async def on_ready():
     print("Bot is ready")
@@ -31,7 +35,8 @@ async def on_ready():
 
 @bot.tree.command(name="standings")
 async def standings(interaction: discord.Interaction):
-    await interaction.response.send_message("This will return the current league standings!")
+    response = formatting.formatStandings(yahoo_api.getLeagueStandings())
+    await interaction.response.send_message(f"```\n{response}\n```")
 
 
 bot.run(discord_token)
