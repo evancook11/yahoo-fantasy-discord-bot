@@ -2,5 +2,6 @@ discord.py
 python-dotenv
 yfpy
 table2ascii
+selenium
 
 

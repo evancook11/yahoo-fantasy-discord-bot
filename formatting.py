@@ -1,12 +1,8 @@
 from table2ascii import table2ascii
 from yfpy import Team
+from models import Table
 
 
-def formatStandings(teams: list[Team]):
-    header = ["Name", "Pts", "W", "L", "T"]
-    body = []
-    for team in teams:
-        team_data = [team.name.decode(), team.points, team.wins, team.losses, team.ties]
-        body.append(team_data)
-    formated_str = table2ascii(header, body)
+def formatStandings(standings_table: Table):
+    formated_str = table2ascii(standings_table.header, standings_table.entries)
     return formated_str

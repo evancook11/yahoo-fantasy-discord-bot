@@ -1,6 +1,6 @@
 from pathlib import Path
 from yfpy import YahooFantasySportsQuery, Team
-
+from models import Table
 
 class YahooApi():
     __league_id: str
@@ -19,5 +19,12 @@ class YahooApi():
             save_token_data_to_env_file=True
         )
 
-    def getLeagueStandings(self) -> list[Team]:
-        return self.__query.get_league_standings().teams
+    def getLeagueStandings(self) -> Table:
+        teams = self.__query.get_league_standings().teams
+        header = ["Name", "Pts", "W", "L", "T"]
+        team_entries = []
+        for team in teams:
+            team_data = [team.name.decode(), team.points, team.wins, team.losses, team.ties]
+            team_entries.append(team_data)
+
+        return Table(header, team_entries)
